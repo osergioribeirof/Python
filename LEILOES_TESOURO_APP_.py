@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyNxA7OGzge+at175jRyxGUk",
+      "authorship_tag": "ABX9TyPicGdqBFxaGt5DLpXsrZr6",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -23,12 +23,12 @@
         "colab_type": "text"
       },
       "source": [
-        "<a href=\"https://colab.research.google.com/github/osergioribeirof/Python/blob/main/LEILOES_TESOURO_APP_py.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+        "<a href=\"https://colab.research.google.com/github/osergioribeirof/Python/blob/main/LEILOES_TESOURO_APP_.py\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
       ]
     },
     {
       "cell_type": "code",
-      "execution_count": 1,
+      "execution_count": null,
       "metadata": {
         "colab": {
           "base_uri": "https://localhost:8080/"
@@ -101,15 +101,20 @@
       "cell_type": "code",
       "source": [
         "import streamlit as st\n",
-        "import Selic_Resultado_Dos_Leiloes  # Importa seu código Python\n",
+        "import Selic_Resultado_Dos_Leiloes  # Importa seu código Python (corrigindo nome do módulo)\n",
         "\n",
         "# Título da aplicação\n",
         "st.title(\"Resultado Dos Leilões\")\n",
         "\n",
-        "# Adicione interações, como botões e inputs\n",
+        "# Botão para executar a função principal\n",
         "if st.button(\"Executar Código\"):\n",
-        "    resultado = Selic_Resultado_Dos_Leiloes.funcao_principal()  # Chame a função do seu código\n",
-        "    st.write(\"Resultado:\", resultado)"
+        "    try:\n",
+        "        resultado = Selic_Resultado_Dos_Leiloes.funcao_principal()  # Chame a função correta\n",
+        "        st.write(\"Resultado:\", resultado)\n",
+        "    except AttributeError:\n",
+        "        st.error(\"Erro: A função 'funcao_principal()' não foi encontrada no módulo.\")\n",
+        "    except Exception as e:\n",
+        "        st.error(f\"Erro ao executar o código: {e}\")"
       ],
       "metadata": {
         "id": "wbNInOf-PJGw"
