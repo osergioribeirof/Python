@@ -4,7 +4,7 @@
   "metadata": {
     "colab": {
       "provenance": [],
-      "authorship_tag": "ABX9TyPicGdqBFxaGt5DLpXsrZr6",
+      "authorship_tag": "ABX9TyMWf80awdQwkkVO91oHMvEG",
       "include_colab_link": true
     },
     "kernelspec": {
@@ -101,20 +101,28 @@
       "cell_type": "code",
       "source": [
         "import streamlit as st\n",
-        "import Selic_Resultado_Dos_Leiloes  # Importa seu código Python (corrigindo nome do módulo)\n",
+        "\n",
+        "# Tentativa de importar o módulo\n",
+        "try:\n",
+        "    import Selic_Resultado_Dos_Leiloes  # Importa seu código Python\n",
+        "except ModuleNotFoundError:\n",
+        "    st.error(\"Erro: O módulo 'Selic_Resultado_Dos_Leiloes' não foi encontrado. Verifique o nome do arquivo.\")\n",
         "\n",
         "# Título da aplicação\n",
         "st.title(\"Resultado Dos Leilões\")\n",
         "\n",
         "# Botão para executar a função principal\n",
         "if st.button(\"Executar Código\"):\n",
-        "    try:\n",
-        "        resultado = Selic_Resultado_Dos_Leiloes.funcao_principal()  # Chame a função correta\n",
-        "        st.write(\"Resultado:\", resultado)\n",
-        "    except AttributeError:\n",
-        "        st.error(\"Erro: A função 'funcao_principal()' não foi encontrada no módulo.\")\n",
-        "    except Exception as e:\n",
-        "        st.error(f\"Erro ao executar o código: {e}\")"
+        "    if \"Selic_Resultado_Dos_Leiloes\" in locals():  # Verifica se o módulo foi carregado\n",
+        "        try:\n",
+        "            resultado = Selic_Resultado_Dos_Leiloes.funcao_principal()  # Chama a função principal\n",
+        "            st.write(\"Resultado:\", resultado)\n",
+        "        except AttributeError:\n",
+        "            st.error(\"Erro: A função 'funcao_principal()' não foi encontrada no módulo.\")\n",
+        "        except Exception as e:\n",
+        "            st.error(f\"Erro ao executar o código: {e}\")\n",
+        "    else:\n",
+        "        st.error(\"Erro: O módulo não foi carregado corretamente.\")"
       ],
       "metadata": {
         "id": "wbNInOf-PJGw"
