@@ -8,8 +8,13 @@ st.title("Análise SELIC - Resultado dos Leilões")
 # URL do site para os dados SELIC
 url = "https://www.dadosdemercado.com.br/selic"
 
+# Adicionar cabeçalhos à requisição
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+}
+
 # Fazer a requisição HTTP para obter o conteúdo da página
-response = requests.get(url)
+response = requests.get(url, headers=headers)
 
 # Verificar o status da resposta
 if response.status_code == 200:
@@ -64,7 +69,7 @@ if response.status_code == 200:
         st.plotly_chart(fig_mom, use_container_width=True)
 
     except Exception as e:
-        st.write(f"Erro ao processar os dados: {e}")
+        st.error(f"Erro ao processar os dados: {e}")
 
 else:
     st.error(f"Erro ao acessar o site: {response.status_code}. Verifique a URL ou tente novamente mais tarde.")
