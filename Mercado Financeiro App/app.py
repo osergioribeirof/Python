@@ -1,14 +1,6 @@
 import streamlit as st
-import matplotlib.pyplot as plt
-import numpy as np
+import pandas as pd
+import yfinance as yf
 
-# Exemplo de gráfico
-x = np.linspace(0, 10, 100)
-y = np.sin(x)
 
-plt.plot(x, y)
-plt.title('Sine Wave')
-
-# Exibir no Streamlit
-st.pyplot(plt)
-
+st.write(""" # BCB - DADOS ECONÔMICOS DO BRASIL """)
