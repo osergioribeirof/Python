@@ -5,37 +5,34 @@ import plotly.express as px
 
 st.title("Análise SELIC - Resultado dos Leilões")
 
-# URL do site para os dados SELIC
-url = "https://www.dadosdemercado.com.br/selic"
+# URL da API do Banco Central para a série da SELIC diária
+url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.432/dados?formato=json"
 
-# Adicionar cabeçalhos à requisição
-headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-}
-
-# Fazer a requisição HTTP para obter o conteúdo da página
-response = requests.get(url, headers=headers)
+# Fazer a requisição HTTP para obter os dados
+response = requests.get(url)
 
 # Verificar o status da resposta
 if response.status_code == 200:
     try:
-        # Ler os dados da tabela
-        tabela = pd.read_html(response.content)[0]
+        # Converter os dados para um DataFrame
+        dados = response.json()
+        tabela = pd.DataFrame(dados)
 
-        # Garantir que a coluna 'Data' esteja no formato datetime
-        tabela['Data'] = pd.to_datetime(tabela['Data'], format='%d/%m/%Y', errors='coerce')
+        # Converter a coluna 'data' para datetime
+        tabela['data'] = pd.to_datetime(tabela['data'], format='%Y-%m-%d')
 
-        # Tratar as colunas de valores (remover 'mi', ajustar separadores e converter para float)
-        for coluna in ['Taxa SELIC', 'Volume Ofertado', 'Volume Aceito']:
-            tabela[coluna] = tabela[coluna].astype(str).str.replace(' mi', '', regex=False)
-            tabela[coluna] = tabela[coluna].str.replace('.', '', regex=False).str.replace(',', '.', regex=False).astype(float)
+        # Converter a coluna 'valor' para float
+        tabela['valor'] = tabela['valor'].astype(float)
+
+        # Renomear colunas para facilitar a leitura
+        tabela.rename(columns={'data': 'Data', 'valor': 'Taxa SELIC'}, inplace=True)
 
         # Ordenar os dados por data
         tabela.sort_values(by='Data', inplace=True)
 
         # Criar um filtro para selecionar a coluna desejada
-        colunas = ['Taxa SELIC', 'Volume Ofertado', 'Volume Aceito']
-        cores = ['green', 'blue', 'orange']
+        colunas = ['Taxa SELIC']
+        cores = ['green']
         coluna_selecionada = st.selectbox("Selecione o dado para análise:", colunas)
 
         # Obter a cor correspondente à coluna selecionada
