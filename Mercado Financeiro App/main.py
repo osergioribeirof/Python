@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import yfinance as yf
+import yfinance as yf 
 
+st.write(""" BCB - DADOS ECONÔMICOS DO BRASIL """)
 
-st.title(""" # BCB - DADOS ECONÔMICOS DO BRASIL """)
+st.write(""" Fim do app """)
