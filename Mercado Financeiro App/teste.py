@@ -27,10 +27,6 @@ if response.status_code == 200:
     # Ordenar os dados por data
     tabela.sort_values(by='Data', inplace=True)
 
-    # Exibir os dados mais recentes no console
-    st.write("### Dados mais recentes:")
-    st.dataframe(tabela.tail())
-
     # Criar um filtro para selecionar a coluna desejada
     colunas = ['Estrangeiro', 'Institucional', 'Pessoa física', 'Inst. Financeira', 'Outros']
     cores = ['green', 'blue', 'orange', 'purple', 'red']
